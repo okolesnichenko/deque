@@ -89,7 +89,7 @@ public:
 
 	T PopBack()
 	{
-		if (empty)
+		if (empty())
 		{
 			cout << "empty";
 		}
@@ -117,6 +117,12 @@ public:
 		return count;
 	}
 
-	~Deque() {};
+	~Deque() 
+	{
+		while (!empty())
+		{
+			PopFront();
+		}
+	};
 };
 
