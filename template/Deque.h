@@ -10,10 +10,23 @@ private:
 		Node * next;
 		Node * prev;
 	};
+
+	
 	Node * _head;
 	Node * _tail;
 	int count;
 public:
+	class Iterator
+	{
+	private:
+		Node * _tmp;
+	public:
+		Iterator(Node* start) : _tmp(start) {}
+		Node& operator* () { return *_tmp; }
+		Node* operator++ (int) { return _tmp = _tmp->next;}
+		Node* operator-- (int) { return _tmp = _tmp->prev; }
+		bool operator!= (const Iterator& it) { return _tmp != it._tmp; }
+	};
 	Deque(): _head(NULL), _tail(NULL), count(0) {};
 	bool empty() 
 	{
@@ -43,9 +56,15 @@ public:
 
 	T PopFront()
 	{
-		if (empty())
+		try {
+			if (empty())
+			{
+				throw "Deque is empty";
+			}
+		}
+		catch (char * ex)
 		{
-			cout << "empty";
+			cout << ex;
 		}
 
 		T t = _head->value;
@@ -89,9 +108,16 @@ public:
 
 	T PopBack()
 	{
-		if (empty())
+		try 
 		{
-			cout << "empty";
+			if (empty())
+			{
+				throw "Deque is empty";
+			}
+		}
+		catch (char * ex)
+		{
+			cout << ex << endl;
 		}
 
 		T t = _tail->value;
@@ -112,6 +138,15 @@ public:
 		return t;
 	}
 
+	Node* begin()
+	{
+		return _tail;
+	}
+
+	Node* end()
+	{
+		return _head;
+	}
 	int Size()
 	{
 		return count;
